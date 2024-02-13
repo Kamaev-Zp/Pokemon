@@ -1,44 +1,34 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
-public  class  Pokemon {
-    //    Cоздал константу и с помощью статического инициализатора - сканнера записываю в статическое название
-//    (переменную additionalHP) Добавляю нашу переменную статическую в экземпляр (объект),
-//    в класс и конструктор, дальше дописываю в методе файт
-//    следующие строки opponent.currentHp += opponent.additionalHP;
-//    opponent.currentHp -= damage; тем самым,
-//    Сначала здоровье покемона прибавляю к нашему бонусному и присваиваю сразу = currentHp
-//    потом отнимая урон который нанес покемон  currentHp -= damage и переписываю
-//    также еще дописал to string  что бы выводить значение покемона пикачу.
-//    После битвы группы покимонов
-//    Отображается их здоровья  + бонусным = Здоровья
-//
-    private final static double additionalHP;
-
-    static {
+public class Pokemon {
+    public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Введите дополнительное количество HP для всех бойцов : ");
-        additionalHP = Double.parseDouble(scanner.nextLine());
+        double additionalHP = Double.parseDouble(scanner.nextLine());
 
-    }
+        Pokemon2 pikachu = new Pokemon2("Picachu", 195, 150, 92, 110, 54, additionalHP);
+        Pokemon2 kurilka = new Pokemon2("Kurilka", 122, 99, 90, 111, 54, additionalHP);
+        Pokemon2 falen = new Pokemon2("falen", 43, 70, 65, 54, 65, additionalHP);
+        Pokemon2 tutur = new Pokemon2("tutur", 111, 76, 43, 87, 43, additionalHP);
+        Pokemon2 rubin = new Pokemon2("rubin", 85, 222, 65, 43, 76, additionalHP);
+        Pokemon2 liras = new Pokemon2("liras", 54, 322, 33, 6, 100, additionalHP);
+        MyArrayList pokemonTeam = new MyArrayList();
+        pokemonTeam.add(pikachu);
+//        pokemonTeam.add(kurilka);
+//        pokemonTeam.add(falen);
+        System.out.println(Arrays.toString(pokemonTeam.getMyArrayListPokemon()));
 
 
-    public static void main(String[] args) {
-        Pokemon2 pikachu = new Pokemon2("Picachu", 195, 150, 92, 110, 54,  additionalHP );
-        Pokemon2 kurilka = new Pokemon2("Kurilka", 122, 99, 90, 111, 54,  additionalHP);
-        Pokemon2 falen = new Pokemon2("falen", 43, 70, 65, 54, 65,  additionalHP);
-        Pokemon2 tutur = new Pokemon2("tutur", 111, 76, 43, 87, 43,  additionalHP);
-        Pokemon2 rubin = new Pokemon2("rubin", 85, 222, 65, 43, 76,  additionalHP);
-        Pokemon2 liras = new Pokemon2("liras", 54, 322, 33, 6, 100,  additionalHP);
 //        System.out.println(pikachu);
 //        kurilka.attack(pikachu);
 //        System.out.println(pikachu);
 
-
+        Pokemon2[] team = pokemonTeam.getMyArrayListPokemon();
 
         Pokemon2[] Team1 = {pikachu, kurilka, falen};
         Pokemon2[] Team2 = {tutur, rubin, liras};
 
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Сколько боев?");
         int s = Integer.parseInt(scanner.nextLine());
 
@@ -47,7 +37,6 @@ public  class  Pokemon {
             teamRelax(Team1, Team2);
         }
     }
-
 
     public static void teamRelax(Pokemon2[] team1, Pokemon2[] team2) {
         for (int i = 0; i < team1.length; i++) {
@@ -66,13 +55,7 @@ public  class  Pokemon {
         }
     }
 
-
     static class Pokemon2 {
-
-
-
-
-
         String name;
         int attack;
         int maxHP;
@@ -80,13 +63,9 @@ public  class  Pokemon {
         int specialAttack;
         int specialDefense;
         int currentHp = 0;
-        double additionalHP ;
+        double additionalHP;
 
-
-
-        public Pokemon2(String name, int attack, int
-                maxHP, int defence, int specialAttack, int specialDefense , double additionalHP) {
-
+        public Pokemon2(String name, int attack, int maxHP, int defence, int specialAttack, int specialDefense, double additionalHP) {
             this.name = name;
             this.attack = attack;
             this.maxHP = maxHP;
@@ -95,15 +74,11 @@ public  class  Pokemon {
             this.specialDefense = specialDefense;
             this.currentHp = maxHP;
             this.additionalHP = additionalHP;
-
-
         }
-
 
         public void attack(Pokemon2 opponent) {
             int damage = this.attack - opponent.defence;
             if (damage > 0) {
-//                Тут
                 opponent.currentHp += opponent.additionalHP;
                 opponent.currentHp -= damage;
                 System.out.println(this.name + " атакует " + opponent.name + " и наносит " + damage + " урона!");
@@ -114,11 +89,9 @@ public  class  Pokemon {
             }
         }
 
-
         public void sleep() {
             Scanner scanner = new Scanner(System.in);
             int nocheinMall = 0;
-
 
             if (currentHp < maxHP / 10) {
                 System.out.println(this.name + ": Что-то мне плохо надо поспать! ");
@@ -130,19 +103,16 @@ public  class  Pokemon {
                 if (nocheinMall == 1) {
                     currentHp += maxHP / 10;
                     System.out.println("Оооу проснулся класс, погнали гасить!" + "\n" + " Здоровье : " + currentHp);
-
                 }
 
                 if (nocheinMall == 2) {
                     System.out.println("Тогда в бой, брат?");
-
                 }
             }
         }
 
-// и Тут
-        public String toString(){
-            return  " Имя бойца : " + name  +  "\n" +
+        public String toString() {
+            return " Имя бойца : " + name + "\n" +
                     " Атака : " + attack + "\n" +
                     " Здоровья бойца : " + maxHP + "\n" +
                     " Защита : " + defence + "\n" +
@@ -151,7 +121,38 @@ public  class  Pokemon {
                     " Бонус Здоровья Бойца : " + additionalHP + "\n";
         }
     }
+
+    static class MyArrayList {
+        private static int INITIALSIZE = 10;
+        private Pokemon2[] MyArrayListPokemon;
+        private int count = 0;
+
+        public MyArrayList() {
+            this.MyArrayListPokemon = new Pokemon2[INITIALSIZE];
+        }
+
+        public void add(Pokemon2 pokemon) {
+            if (count >= MyArrayListPokemon.length) {
+                MyArrayListPokemon = Arrays.copyOf(MyArrayListPokemon, (int) (MyArrayListPokemon.length * 1.5));
+            }
+            MyArrayListPokemon[count] = pokemon;
+            count++;
+        }
+
+        public Pokemon2[] getMyArrayListPokemon() {
+            return Arrays.copyOf(MyArrayListPokemon, count);
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
 
 //   this.name = name;
 //           this.attack = attack;
